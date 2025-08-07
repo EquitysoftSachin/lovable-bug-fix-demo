@@ -1,73 +1,71 @@
-# Welcome to your Lovable project
+# 📄 README - Bug Fix Summary Report
 
-## Project info
+## 🐞 Bug Title
+**Lead Capture Form Email Function - Bug Fix Report**
 
-**URL**: https://lovable.dev/projects/94b52f1d-10a5-4e88-9a9c-5c12cf45d83a
+---
 
-## How can I edit this code?
+## 🔍 Description
 
-There are several ways of editing your application.
+The bug report addresses an issue in the lead capture form where submitted entries were not triggering email notifications. The issue impacted communication flow with potential leads and needed urgent resolution.
 
-**Use Lovable**
+---
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/94b52f1d-10a5-4e88-9a9c-5c12cf45d83a) and start prompting.
+## ⚠️ Issue Details
 
-Changes made via Lovable will be committed automatically to this repo.
+- **Error Observed**: Users were able to submit the lead form, but no confirmation or notification emails were triggered.
+- **Root Cause**:
+  - Missing SMTP credentials in environment configuration.
+  - Incorrect usage of email-sending utility (deprecated function used).
+  - Validation not enforced before form submission.
+  - No logging mechanism for silent failures.
 
-**Use your preferred IDE**
+---
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+## ✅ Resolution Summary
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+The following changes were made to resolve the issue:
 
-Follow these steps:
+- ✅ SMTP settings were properly configured using environment variables.
+- ✅ Deprecated method replaced with `sendMail()` from the `nodemailer` module.
+- ✅ Implemented robust input validation on the lead form before processing.
+- ✅ Logging (console and file-based) was added to monitor failed email attempts.
+- ✅ Unit testing was conducted on the new mail function to verify delivery success.
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+---
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+## 🔧 Files Updated
 
-# Step 3: Install the necessary dependencies.
-npm i
+- `leadForm.js` – Improved validation and submission flow.
+- `mailerService.js` – Updated to use latest mailing methods.
+- `config/email.js` – Added dynamic SMTP environment variable support.
+- `.env` – Included proper mail credentials.
+- `logs/email-errors.log` – Added for error tracking.
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
-```
+---
 
-**Edit a file directly in GitHub**
+## 🧪 Testing & Verification
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+- Test Case 1: Submitting a valid lead → Email successfully received.
+- Test Case 2: Invalid email address → Form shows validation error.
+- Test Case 3: SMTP down → Error logged, user sees friendly message.
 
-**Use GitHub Codespaces**
+---
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+## 📅 Date of Fix
 
-## What technologies are used for this project?
+**August 7, 2025**
 
-This project is built with:
+---
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+## 👨‍💻 Fixed By
 
-## How can I deploy this project?
+**Sachin Dobariya**
 
-Simply open [Lovable](https://lovable.dev/projects/94b52f1d-10a5-4e88-9a9c-5c12cf45d83a) and click on Share -> Publish.
+---
 
-## Can I connect a custom domain to my Lovable project?
+## 🗂️ Notes
 
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+- Ensure SMTP credentials are rotated periodically.
+- Consider integrating external email services (e.g., SendGrid or Mailgun) for higher deliverability in production.
+- Monitor `email-errors.log` weekly for silent delivery failures.
